@@ -1,0 +1,50 @@
+module Workarea
+  decorate Storefront::ProductViewModel, with: :afterpay do
+    decorated do
+      include Storefront::AfterpayConfiguration
+    end
+
+    def show_afterpay?
+      return unless pricing.has_prices?
+      return unless afterpay_settings.enabled? && afterpay_settings.display_on_pdp?
+      return unless afterpay_location_configuration.present?
+
+      afterpay_location_configuration.any? do |ap|
+        pricing.sell_min_price >= min_price && pricing.sell_min_price <= max_price
+      end
+    end
+
+    def installment_price
+      pricing.sell_min_price / Workarea::Afterpay.config[:installment_count]
+    end
+
+    private
+
+      def min_price
+        config = afterpay_location_configuration.first.with_indifferent_access
+        return 0.to_m unless config[:minimumAmount].present?
+        config[:minimumAmount][:amount].to_m
+      end
+
+      def max_price
+        config = afterpay_location_configuration.first.with_indifferent_access
+        config[:maximumAmount][:amount].to_m
+      end
+
+      def afterpay_location
+        currency = pricing.sell_min_price.currency.iso_code
+        location = Workarea::Afterpay.config[:currency_country_map][currency.to_sym]
+        return unless location.present?
+
+        location.to_sym.downcase
+      end
+
+      def afterpay_location_configuration
+        afterpay_configuration(afterpay_location)
+      end
+
+      def afterpay_settings
+        @afterpay_settings ||= Workarea::Afterpay::Configuration.current
+      end
+  end
+end

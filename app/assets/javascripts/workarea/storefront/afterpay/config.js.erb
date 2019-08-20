@@ -1,0 +1,17 @@
+(function () {
+    'use strict';
+
+    /**
+     * Config Variables
+     */
+
+    WORKAREA.config.afterpay = {
+      afterpayScript: function() {
+        if('<%= Workarea::Afterpay.test? %>' == 'true') {
+          return 'https://portal.sandbox.afterpay.com/afterpay-async.js';
+        } else {
+          return 'https://portal.afterpay.com/afterpay-async.js';
+        }
+      }()
+    }
+}());

@@ -1,0 +1,32 @@
+module Workarea
+  decorate Storefront::Checkout::PaymentViewModel, with: :afterpay do
+    decorated do
+      include Storefront::AfterpayConfiguration
+      delegate :afterpay?, to: :payment
+    end
+
+    def allow_redirect_to_afterpay?
+      # only allow a redirect to afterpay if the tender has a token and
+      # that token has not been redirected to afterpay already.
+      # a token that is ready to capture has come back the afterpay site
+      # with a success. This token is now 'hot' and can be captured
+      afterpay_token.present? && !payment.afterpay.ready_to_capture?
+    end
+
+    def afterpay_token
+      return unless payment.afterpay?
+      payment.afterpay.token
+    end
+
+    def using_new_card?
+      super && !afterpay?
+    end
+
+    def afterpay
+      order = Workarea::Order.find(payment.id)
+
+      Storefront::AfterpayViewModel.new(order, { afterpay_configuration: afterpay_configuration(order.afterpay_location), order: order })
+    end
+  end
+end
+

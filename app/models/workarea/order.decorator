@@ -1,0 +1,17 @@
+module Workarea
+  decorate Order, with: :afterpay do
+    decorated do
+      field :afterpay_token, type: String
+
+      index({ afterpay_token: 1}, { background: true })
+    end
+
+    def afterpay_location
+      currency = total_price.currency.iso_code
+      location = Afterpay.config[:currency_country_map][currency.to_sym]
+      return unless location.present?
+
+      location.to_sym.downcase
+    end
+  end
+end

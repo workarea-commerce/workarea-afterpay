@@ -1,0 +1,42 @@
+module Workarea
+  decorate Payment, with: :afterpay do
+    decorated do
+      embeds_one :afterpay, class_name: 'Workarea::Payment::Tender::Afterpay'
+    end
+
+    def afterpay?
+      afterpay.present?
+    end
+
+    def set_afterpay(attrs)
+      build_afterpay unless afterpay
+      afterpay.attributes = attrs.slice(
+        :token
+      )
+
+      save
+    end
+
+    def clear_afterpay
+      self.afterpay = nil
+      save
+    end
+
+    def set_credit_card(*)
+      self.afterpay = nil
+      super
+    end
+
+    def authorize!(options = {})
+      transactions = tenders.map { |t| t.build_transaction(action: payment_action(t)) }
+      perform_operation(transactions, options)
+    end
+
+    private
+
+      def payment_action(tender)
+        tender.slug == :afterpay ? 'purchase' : 'authorize'
+      end
+
+  end
+end

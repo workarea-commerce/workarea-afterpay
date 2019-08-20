@@ -1,0 +1,59 @@
+- @page_title = t('workarea.admin.afterpay_configuration.edit.title')
+
+.view
+  .view__header
+    .view__heading
+      = link_to "↑ #{t('workarea.admin.search_settings.show.dashboard_link')}", settings_dashboards_path
+      %h1= t('workarea.admin.afterpay_configuration.edit.title')
+
+  .view__container
+    = form_tag afterpay_configuration_path, method: :patch, data: { unsaved_changes: '' } do
+      .grid
+        .grid__cell
+          %p= t('workarea.admin.afterpay_configuration.edit.box_help_text')
+
+          -if @configuration.us_limits.present?
+            .grid__cell.grid__cell--33.grid__cell--25-at-medium
+              .property
+                = label_tag 'uslimits', t('workarea.admin.afterpay_configuration.edit.us_limit'), class: 'property__name'
+                = "#{@configuration.us_limits[:min]} - #{@configuration.us_limits[:max]}"
+
+          -if @configuration.au_limits.present?
+            .grid__cell.grid__cell--33.grid__cell--25-at-medium
+              .property
+                = label_tag 'uslimits', t('workarea.admin.afterpay_configuration.edit.au_limit'), class: 'property__name'
+                = "#{@configuration.au_limits[:min]} - #{@configuration.au_limits[:max]}"
+
+      .grid__cell
+
+        .property
+          %span.property__name
+            = t('workarea.admin.afterpay_configuration.edit.enabled')
+            = link_to '#enabled', data: { tooltip: '' } do
+              = inline_svg('workarea/admin/icons/help.svg', class: 'svg-icon svg-icon--small svg-icon--blue', title: t('workarea.admin.afterpay_configuration.edit.enabled'))
+            #enabled.tooltip-content
+              %p= t('workarea.admin.afterpay_configuration.edit.help.enabled')
+
+          = toggle_button_for 'enabled', @configuration.enabled?
+
+          %span.property__name
+            = t('workarea.admin.afterpay_configuration.edit.show_on_pdp')
+            = link_to '#show-on-pdp', data: { tooltip: '' } do
+              = inline_svg('workarea/admin/icons/help.svg', class: 'svg-icon svg-icon--small svg-icon--blue', title: t('workarea.admin.afterpay_configuration.edit.show_on_pdp'))
+            #show-on-pdp.tooltip-content
+              %p= t('workarea.admin.afterpay_configuration.edit.help.show_on_pdp')
+
+          = toggle_button_for 'display_on_pdp', @configuration.display_on_pdp?
+
+          %span.property__name
+            = t('workarea.admin.afterpay_configuration.edit.show_on_cart')
+            = link_to '#show-on-cart', data: { tooltip: '' } do
+              = inline_svg('workarea/admin/icons/help.svg', class: 'svg-icon svg-icon--small svg-icon--blue', title: t('workarea.admin.afterpay_configuration.edit.show_on_cart'))
+            #show-on-cart.tooltip-content
+              %p= t('workarea.admin.afterpay_configuration.edit.help.show_on_cart')
+
+          = toggle_button_for 'display_on_cart', @configuration.display_on_cart?
+
+      .workflow-bar
+        .grid.grid--auto.grid--right.grid--middle
+          .grid__cell= button_tag t('workarea.admin.afterpay_configuration.edit.button'), value: 'save_settings', class: 'workflow-bar__button workflow-bar__button--update'

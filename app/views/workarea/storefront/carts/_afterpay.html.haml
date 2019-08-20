@@ -1,0 +1,9 @@
+-if @cart.afterpay.show_on_cart?
+  -if @cart.afterpay.order_total_in_range?
+    %p.cart__checkout-action.cart__checkout-action--afterpay
+      #{t('workarea.storefront.carts.afterpay', installment_price: number_to_currency(@cart.afterpay.installment_price), installment_count: Workarea.config.afterpay[:installment_count])} #{image_tag('https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png')}
+      %span= link_to 'More Info', learn_more_link(@cart.total_price), data: { dialog_button: '' }
+  - else
+    %p
+      #{image_tag('https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png')}
+      #{t('workarea.storefront.afterpay.ineligible_order_total', min: number_to_currency(@cart.afterpay.min_price), max: number_to_currency(@cart.afterpay.max_price))}

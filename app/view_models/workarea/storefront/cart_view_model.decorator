@@ -1,0 +1,12 @@
+module Workarea
+  decorate Storefront::CartViewModel, with: :afterpay do
+    decorated do
+      include Storefront::AfterpayConfiguration
+    end
+
+    def afterpay
+      @afterpay ||= Storefront::AfterpayViewModel.new(nil,  {afterpay_configuration: afterpay_configuration(order.afterpay_location), order: order})
+    end
+  end
+end
+

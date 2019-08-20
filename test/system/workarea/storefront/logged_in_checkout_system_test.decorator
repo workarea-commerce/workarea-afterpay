@@ -1,0 +1,10 @@
+require 'test_helper'
+
+module Workarea
+  decorate Storefront::LoggedInCheckoutSystemTest, with: :afterpay do
+    def test_afterpay_option_in_checkout
+      assert(page.has_content?(t('workarea.storefront.afterpay.on_continue')))
+      assert(page.has_content?(t('workarea.storefront.checkouts.afterpay', installment_price: '$3.21', installment_count: Workarea.config.afterpay[:installment_count])))
+    end
+  end
+end

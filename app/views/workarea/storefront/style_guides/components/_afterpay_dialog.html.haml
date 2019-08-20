@@ -1,0 +1,92 @@
+#afterpay-dialog.style-guide__subsection
+
+  %h3= link_to_style_guide('components', 'afterpay_dialog')
+
+  %p Displays the US Afterpay dialog according to designs provided
+
+  .style-guide__example-block
+    .afterpay-dialog
+      .afterpay-dialog__header
+        .grid
+          .grid__cell
+            %p= t('workarea.afterpay.dialog.us.installments_by')
+            = image_tag('workarea/storefront/afterpay/afterpay_logo.png', alt: 'Afterpay Logo', class: "afterpay-dialog__logo")
+            %h2.afterpay-dialog__heading
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.us.shop_now')
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.us.enjoy_now')
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.us.pay_later')
+            .afterpay-dialog__description= t('workarea.afterpay.dialog.us.description')
+
+      .afterpay-dialog__steps
+        .grid
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = inline_svg 'workarea/storefront/afterpay/us/select_installments.svg', class: 'afterpay-dialog__step-icon'
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.us.steps.first.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.us.steps.first.body')
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = inline_svg 'workarea/storefront/afterpay/us/complete_checkout.svg', class: 'afterpay-dialog__step-icon'
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.us.steps.second.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.us.steps.second.body')
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = inline_svg 'workarea/storefront/afterpay/us/four_equal_payments.svg', class: 'afterpay-dialog__step-icon'
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.us.steps.third.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.us.steps.third.body')
+      .afterpay-dialog__footer
+        %h5.afterpay-dialog__heading= t('workarea.afterpay.dialog.us.footer_heading')
+        %ol.afterpay-dialog__requirements
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.us.requirements.first')
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.us.requirements.second')
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.us.requirements.third')
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.us.requirements.fourth')
+        %p.afterpay-dialog__terms
+          = t('workarea.afterpay.dialog.us.terms.')
+          = link_to 'https://www.afterpay.com/purchase-payment-agreement','https://www.afterpay.com/purchase-payment-agreement', target: '_blank', rel: 'noopener'
+        %p.afterpay-dialog__copyright= t('workarea.afterpay.dialog.us.copyright')
+
+
+  %p Displays a different Afterpay dialog for AUS
+
+  .style-guide__example-block
+    .afterpay-dialog.afterpay-dialog--aus
+      .afterpay-dialog__header
+        .grid
+          .grid__cell.grid__cell--66-at-medium
+            = image_tag('workarea/storefront/afterpay/afterpay_logo.png', alt: 'Afterpay Logo', class: "afterpay-dialog__logo")
+            %h2.afterpay-dialog__heading
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.aus.shop_now')
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.aus.enjoy_now')
+              %span.afterpay-dialog__subheading-part= t('workarea.afterpay.dialog.aus.pay_later')
+            .afterpay-dialog__description= t('workarea.afterpay.dialog.aus.description')
+          .grid__cell.grid__cell--33-at-medium
+            = image_tag('workarea/storefront/afterpay/aus/dialog_header_image.png', alt: 'Afterpay background', class: "afterpay-dialog__header-image")
+
+      .afterpay-dialog__steps
+        .grid
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = image_tag('workarea/storefront/afterpay/aus/step_1.png', alt: 'Select Afterpay', class: "afterpay-dialog__step-icon")
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.aus.steps.first.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.aus.steps.first.body')
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = image_tag('workarea/storefront/afterpay/aus/step_2.png', alt: 'Complete Checkout', class: "afterpay-dialog__step-icon")
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.aus.steps.second.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.aus.steps.second.body')
+          .grid__cell.grid__cell--33-at-medium
+            .afterpay-dialog__step
+              = image_tag('workarea/storefront/afterpay/aus/step_3.png', alt: 'Pay over 4 equal payments', class: "afterpay-dialog__step-icon")
+              %h3.afterpay-dialog__heading= t('workarea.afterpay.dialog.aus.steps.third.heading')
+              .afterpay-dialog__step-body= t('workarea.afterpay.dialog.aus.steps.third.body')
+      .afterpay-dialog__footer
+        %h5.afterpay-dialog__heading= t('workarea.afterpay.dialog.aus.footer_heading')
+        %ol.afterpay-dialog__requirements
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.aus.requirements.first')
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.aus.requirements.second')
+          %li.afterpay-dialog__requirement= t('workarea.afterpay.dialog.aus.requirements.third')
+        %p.afterpay-dialog__terms
+          = t('workarea.afterpay.dialog.aus.terms')
+          = link_to 'https://www.afterpay.com/terms', 'https://www.afterpay.com/terms', target: '_blank', rel: 'noopener'
+        %p.afterpay-dialog__copyright= t('workarea.afterpay.dialog.aus.copyright')

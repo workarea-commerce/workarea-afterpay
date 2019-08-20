@@ -1,0 +1,17 @@
+-if @step.afterpay.show?
+  -if @step.afterpay.order_total_in_range?
+    .checkout-payment__primary-method{ class: ('checkout-payment__primary-method--selected' if @step.afterpay?) }
+      .button-property
+        = hidden_field_tag 'from_checkout', 'from_checkout', id: nil
+        .value= radio_button_tag 'payment', 'afterpay', step.afterpay?, data: { afterpay_token: (@step.afterpay_token if @step.allow_redirect_to_afterpay?), afterpay_country: @step.afterpay.afterpay_country }
+        = label_tag 'payment[afterpay]', nil, class: 'button-property__name' do
+          %span.button-property__text= image_tag('https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png')
+      %p.checkout-payment__primary-method-description
+        %span #{t('workarea.storefront.checkouts.afterpay', installment_price: number_to_currency(@step.afterpay.installment_price), installment_count: Workarea.config.afterpay[:installment_count])}
+        %span= link_to(t('workarea.storefront.afterpay.learn_more'), learn_more_link(@cart.total_price), data: { popup_button: { width: 600, height: 800 }})
+      %p
+        %span= t('workarea.storefront.afterpay.on_continue')
+  - else
+    %p
+      #{image_tag('https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png')}
+      #{t('workarea.storefront.afterpay.ineligible_order_total', min: number_to_currency(@cart.afterpay.min_price), max: number_to_currency(@cart.afterpay.max_price))}

@@ -1,0 +1,4 @@
+%p{ style: "margin: 0 0 6px; font: 13px/1.5 arial; color: #{@config.text_color};" }
+  = t('workarea.afterpay.tender_description', installment_price: number_to_currency(tender.installment_price), installment_count: Workarea.config.afterpay[:installment_count])
+
+

@@ -1,0 +1,107 @@
+---
+en:
+  workarea:
+    admin:
+      orders:
+        tenders:
+          afterpay:
+            title: Afterpay
+      shared:
+        primary_nav:
+          afterpay_configuration_title: Afterpay Configuration
+      afterpay_configuration:
+        edit:
+          flash_messages:
+            updated: Afterpay configuration has been updated
+            save_error: There was a problem updating the configuration
+          title: Afterpay Configuration
+          button: Save Afterpay Configuration
+          enabled: Show Afterpay?
+          show_on_pdp: Show on PDP?
+          show_on_cart: Show on Cart?
+          help:
+            enabled: Show Afterpay on the site for users who are checking out in an accepted currency. Setting this to false will turn off all Afterpay display points. Make sure that credentials for the relevant API endpoints are configured.
+            show_on_pdp: Show Afterpay on the product detail page.
+            show_on_cart: Show Afterpay on the cart page.
+          box_title: Setting up Afterpay Configuration
+          box_help_text: Use the toggle buttons to control where Afterpay is displayed.
+          us_limit: USD order limits
+          au_limit: AUD order limits
+          min_amount: Min Amount
+          max_amount: Max Amount
+    storefront:
+      orders:
+        tenders:
+          afterpay: Afterpay
+      carts:
+        afterpay: "Pay %{installment_count} interest free payments of %{installment_price} with"
+      checkouts:
+        afterpay: "%{installment_count} interest free payments of %{installment_price} every 2 weeks"
+      products:
+         afterpay: "Or %{installment_count} payments of %{installment_price} with"
+      afterpay:
+        address_error: We can not ship to this address. Please enter a new address.
+        cancel_message: Your Afterpay order has been cancelled. Please select another payment method.
+        check_out: Check Out with afterpay
+        checkout_submit_text: Continue to Afterpay
+        ineligible_order_total:  "Available for orders totals between %{min} and %{max}"
+        on_continue: When you continue, you will be taken to the Afterpay website to complete your order.
+        paid_with_afterpay: Paid with Afterpay
+        payment_error: There was a problem processing your Afterpay payment, you have not been charged'. Please try again or select
+          another payment method.
+        afterpay: Afterpay
+        learn_more: Learn More
+    afterpay:
+      capture: "%{amount} has been captured"
+      refund: "%{amount} has been refunded"
+      capture_failure: "Afterpay capture has failed"
+      refund_failure: "Afterpay refund has failed"
+      tender_description: "Afterpay: %{installment_count} installments of %{installment_price}"
+      dialog:
+        aus:
+          copyright: © 2017 Afterpay
+          description: In four simple payments available instantly at checkout
+          enjoy_now: Enjoy Now.
+          footer_heading: 'All you need is:'
+          installments_by: Installments by
+          pay_later: Pay over time.
+          shop_now: Shop Now.
+          steps:
+            first:
+              heading: 1. Select Afterpay as your payment method
+              body: Use your existing payment card
+            second:
+              heading: 2. Complete your checkout in seconds
+              body: No long forms, instant approval online.
+            third:
+              heading: 3. Pay over 4 equal payments
+              body: Pay fortnightly, enjoy your purchase straight away!
+          requirements:
+            first: 1) A payment card
+            second: 2) To be over 18 years of age
+            third: 3) Resident of country offering Afterpay
+          terms: To see Afterpay's complete terms, visit
+        us:
+          copyright: © 2018 Afterpay
+          description: Pay in 4 equal installments every 2 weeks available at checkout
+          enjoy_now: Enjoy Now.
+          footer_heading: 'All you need is:'
+          installments_by: Installments by
+          pay_later: Pay Later
+          shop_now: Shop Now.
+          steps:
+            first:
+              heading: Select Installments by Afterpay as your payment method
+              body: Use your existing payment card
+            second:
+              heading: Complete your checkout in seconds
+              body: No long forms, approval online.
+            third:
+              heading: Pay over 4 equal payments
+              body: Pay every 2 weeks, enjoy your purchase right away!
+          requirements:
+            first: Eligable US-issued credit or debit card
+            second: To be over 18 and the legal age in your state of residence
+            third: A valid and verifiable email address and US mobile number
+            fourth: To be a resident of the US
+          terms: Late fees may apply. For complete terms visit

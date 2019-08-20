@@ -1,0 +1,11 @@
+module Workarea
+  decorate Storefront::Checkout::PlaceOrderController, with: 'afterpay' do
+    def place_order
+      if params[:payment] == 'afterpay' && !current_checkout.payment.afterpay?
+        redirect_to start_afterpay_path and return
+      else
+        super
+      end
+    end
+  end
+end

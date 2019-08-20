@@ -1,0 +1,158 @@
+/*------------------------------------*\
+    #AFTERPAY-DIALOG
+\*------------------------------------*/
+
+$afterpay-navy: #074578 !default;
+$afterpay-blue: #16a0d5 !default;
+$afterpay-aqua: #05cdd5 !default;
+$afterpay-gray: #2d3134 !default;
+$afterpay-magenta: #ec3b91 !default;
+$afterpay-off-gray: #606a72 !default;
+
+$afterpay-dialog-max-width: 700px !default;
+$afterpay-dialog-spacing: $spacing-unit * 3 !default;
+$afterpay-dialog-background-color: $white !default;
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+    src: font-url('workarea/storefront/raleway/raleway_regular.woff2') format('woff2'),
+         font-url('workarea/storefront/raleway/raleway_regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 800;
+    src: font-url('workarea/storefront/raleway/raleway_800.woff2') format('woff2'),
+         font-url('workarea/storefront/raleway/raleway_800.woff') format('woff');
+}
+
+.afterpay-dialog {
+    max-width: $afterpay-dialog-max-width;
+    color: $afterpay-off-gray;
+    font-family: 'Raleway', 'Lucida Grande', Helvetica, sans-serif;
+    background-color: $afterpay-dialog-background-color;
+
+    .style-guide__example-block & {
+        margin: 0 auto;
+    }
+}
+
+.afterpay-dialog--aus {}
+
+    .afterpay-dialog__header {
+        position: relative;
+        padding: $afterpay-dialog-spacing $afterpay-dialog-spacing 0;
+        background-color: #fafbfc;
+        text-align: center;
+
+        .afterpay-dialog--aus & {
+            text-align: left
+        }
+    }
+
+        .afterpay-dialog__logo {
+            padding-bottom: $afterpay-dialog-spacing;
+        }
+
+        .afterpay-dialog__subheading {
+            @extend %inline-list;
+        }
+
+        .afterpay-dialog__subheading-part {
+            line-height: 1.2;
+
+            .afterpay-dialog--aus &:last-of-type {
+                display: block;
+            }
+        }
+
+        .afterpay-dialog__description {
+            padding-bottom: $afterpay-dialog-spacing;
+
+            @include respond-to($medium-breakpoint) {
+                padding-bottom: $afterpay-dialog-spacing * 2;
+            }
+
+            .afterpay-dialog--aus & {
+                width: 75%;
+            }
+        }
+
+        .afterpay-dialog__header-image {
+            width: 100%;
+
+        }
+
+        .afterpay-dialog__heading {
+            color: $afterpay-blue;
+            font-weight: bold;
+            line-height: 1;
+
+            .afterpay-dialog__header & {
+
+            }
+
+            .afterpay-dialog__step & {
+
+                .afterpay-dialog--aus & {
+                    color: $afterpay-gray;
+                }
+            }
+
+            .afterpay-dialog__footer & {
+                color: $afterpay-gray;
+            }
+        }
+
+    .afterpay-dialog__steps {
+        margin: $afterpay-dialog-spacing 0;
+        padding: 0 $afterpay-dialog-spacing;
+    }
+
+        .afterpay-dialog__step {
+            padding: $afterpay-dialog-spacing / 2;
+
+            .afterpay-dialog--aus & {
+                text-align: center;
+            }
+        }
+
+            .afterpay-dialog__step-icon {
+                display: block;
+                height: 100px;
+                margin: 0 auto $afterpay-dialog-spacing;
+
+                .afterpay-dialog--aus & {
+                    height: 74px;
+                }
+            }
+
+            .afterpay-dialog__step-body {
+            }
+
+    .afterpay-dialog__footer {
+        padding: 0 $afterpay-dialog-spacing $afterpay-dialog-spacing;
+    }
+
+        .afterpay-dialog__requirements {
+            padding: 0;
+
+            .afterpay-dialog--aus & {
+                margin: 0;
+            }
+        }
+
+            .afterpay-dialog__requirement {
+                .afterpay-dialog--aus & {
+                    display: inline-block;
+                }
+            }
+
+        .afterpay-dialog__terms {}
+
+        .afterpay-dialog__copyright {
+            text-align: center;
+        }

@@ -1,0 +1,3 @@
+-if @product.show_afterpay?
+  %p.cart__checkout-action.cart__checkout-action--afterpay.cart__ #{t('workarea.storefront.products.afterpay', installment_price: number_to_currency(@product.installment_price), installment_count: Workarea.config.afterpay[:installment_count])} #{image_tag('https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png')}
+  %span= link_to t('workarea.storefront.afterpay.learn_more'), learn_more_link(@product.sell_min_price), data: { popup_button: { width: 600, height: 800 }}
