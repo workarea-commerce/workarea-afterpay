@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "workarea-afterpay"
   s.version     = Workarea::Afterpay::VERSION
   s.authors     = ["Jeff Yucis"]
-  s.email       = ["jyucis@weblinc.com"]
+  s.email       = ["jyucis@workarea.com"]
   s.homepage    = "https://github.com/workarea-commerce/workarea-afterpay"
-  s.summary     = "Workarea Afterpay Integration."
-  s.description = "Adds Afterpay as a payment method for Workarea Checkout"
+  s.summary     = "Workarea Commerce Platform Afterpay integration"
+  s.description = "Adds Afterpay as a payment method for Workarea Commerce Platform"
 
   s.files = `git ls-files`.split("\n")
 
