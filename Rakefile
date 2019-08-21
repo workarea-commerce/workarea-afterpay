@@ -34,15 +34,16 @@ desc "Release version #{Workarea::Afterpay::VERSION} of the gem"
 task :release do
   host = "https://#{ENV['BUNDLE_GEMS__WEBLINC__COM']}@gems.weblinc.com"
 
-  Rake::Task['workarea:changelog'].execute
-  system 'git add CHANGELOG.md'
-  system 'git commit -m "Update CHANGELOG"'
-  system 'git push origin HEAD'
+  #Rake::Task['workarea:changelog'].execute
+  #system 'git add CHANGELOG.md'
+  #system 'git commit -m "Update CHANGELOG"'
+  #system 'git push origin HEAD'
 
   system "git tag -a v#{Workarea::Afterpay::VERSION} -m 'Tagging #{Workarea::Afterpay::VERSION}'"
   system 'git push --tags'
 
   system "gem build workarea-afterpay.gemspec"
+  system "gem push workarea-afterpay-#{Workarea::Afterpay::VERSION}.gem"
   system "gem push workarea-afterpay-#{Workarea::Afterpay::VERSION}.gem --host #{host}"
   system "rm workarea-afterpay-#{Workarea::Afterpay::VERSION}.gem"
 end
