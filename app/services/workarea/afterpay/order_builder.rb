@@ -2,6 +2,11 @@ module Workarea
   module Afterpay
     class OrderBuilder
 
+      module ProductUrl
+        include Workarea::I18n::DefaultUrlOptions
+        include Storefront::Engine.routes.url_helpers
+        extend self
+      end
       attr_reader :order
 
       # @param  ::Workarea::Order
@@ -11,7 +16,7 @@ module Workarea
 
       def build
         {
-          totalAmount: {
+         amount: {
             amount: order.order_balance.to_s,
             currency: currency_code,
           },
@@ -58,7 +63,7 @@ module Workarea
         def address(address_obj)
           {
             name: "#{address_obj.first_name} #{address_obj.last_name}",
-            suburb: address_obj.city,
+            area1: address_obj.city,
             line1: address_obj.street,
             state: address_obj.region,
             postcode: address_obj.postal_code,
@@ -74,6 +79,7 @@ module Workarea
               name: product.name,
               sku: oi.sku,
               quantity: oi.quantity,
+              pageUrl: ProductUrl.product_url(id: oi.product.to_param, host: Workarea.config.host),
               price: {
                 amount: oi.original_unit_price.to_s,
                 currency: currency_code

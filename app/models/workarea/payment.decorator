@@ -26,17 +26,5 @@ module Workarea
       self.afterpay = nil
       super
     end
-
-    def authorize!(options = {})
-      transactions = tenders.map { |t| t.build_transaction(action: payment_action(t)) }
-      perform_operation(transactions, options)
-    end
-
-    private
-
-      def payment_action(tender)
-        tender.slug == :afterpay ? 'purchase' : 'authorize'
-      end
-
   end
 end

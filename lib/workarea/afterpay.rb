@@ -14,7 +14,9 @@ require "faraday"
 
 module Workarea
   module Afterpay
-     def self.credentials
+    RETRY_ERROR_STATUSES = 500..599
+
+    def self.credentials
       (Rails.application.secrets.afterpay || {}).deep_symbolize_keys
     end
 

@@ -52,9 +52,14 @@ en:
         afterpay: Afterpay
         learn_more: Learn More
     afterpay:
+      authorize: "%{amount} has been authorized"
       capture: "%{amount} has been captured"
+      purchase: "%{amount} has been purchased"
       refund: "%{amount} has been refunded"
+      refund: "Aftperay Transaction has been voided"
+      authorize_failure: "Afterpay authorize has failed"
       capture_failure: "Afterpay capture has failed"
+      purchase_failure: "Afterpay purchase has failed"
       refund_failure: "Afterpay refund has failed"
       tender_description: "Afterpay: %{installment_count} installments of %{installment_price}"
       dialog:

@@ -6,10 +6,7 @@ module Workarea
       end
 
       def get_configuration
-        b = [
-          {
-            "type": "PAY_BY_INSTALLMENT",
-            "description": "Pay over time",
+        b = {
             "minimumAmount": {
                  "amount": "5.00",
                  "currency": "USD"
@@ -19,7 +16,7 @@ module Workarea
                 "currency": "USD"
             }
           }
-        ]
+
         Response.new(response(b))
       end
 
@@ -78,7 +75,7 @@ module Workarea
                   "currency": "USD"
               },
               "token": "9tlqhfgebl6mu2g9t98rre2ia25ri2hvadc4aaimvpca1p9fma5j",
-              "totalAmount": {
+              "amount": {
                   "amount": "95.30",
                   "currency": "USD"
               }
@@ -95,11 +92,25 @@ module Workarea
         Response.new(response(b))
       end
 
-      def capture(token, order_id = "")
+      def capture(payment_id, amount, request_id)
+        Response.new(response(payment_response_body, 200))
+      end
+
+      def authorize(token, order_id = "", request_id)
+        if token == "error_token"
+          Response.new(response(capture_error_response_body, 402))
+        elsif token == "timeout_token"
+          Response.new(response(nil, 502))
+        else
+          Response.new(response(payment_response_body, 200))
+        end
+      end
+
+      def purchase(token, order_id = "", request_id)
         if token == "error_token"
           Response.new(response(capture_error_response_body, 402))
         else
-          Response.new(response(capture_response_body, 200))
+          Response.new(response(payment_response_body, 200))
         end
       end
 
@@ -116,6 +127,10 @@ module Workarea
         }
 
         Response.new(response(b))
+      end
+
+      def void(payment_id)
+        Response.new(response(payment_response_body))
       end
 
       private
@@ -138,7 +153,7 @@ module Workarea
           }
         end
 
-        def capture_response_body
+        def payment_response_body
           {
             "id": "12345678",
              "token": "q54l9qd907m6iqqqlcrm5tpbjjsnfo47vsm59gqrfnd2rqefk9hu",

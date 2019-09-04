@@ -9,9 +9,8 @@ module Workarea
       return unless afterpay_settings.enabled? && afterpay_settings.display_on_pdp?
       return unless afterpay_location_configuration.present?
 
-      afterpay_location_configuration.any? do |ap|
-        pricing.sell_min_price >= min_price && pricing.sell_min_price <= max_price
-      end
+      pricing.sell_min_price >= min_price && pricing.sell_min_price <= max_price
+
     end
 
     def installment_price
@@ -21,14 +20,12 @@ module Workarea
     private
 
       def min_price
-        config = afterpay_location_configuration.first.with_indifferent_access
-        return 0.to_m unless config[:minimumAmount].present?
-        config[:minimumAmount][:amount].to_m
+        return 0.to_m unless afterpay_location_configuration[:minimumAmount].present?
+        afterpay_location_configuration[:minimumAmount][:amount].to_m
       end
 
       def max_price
-        config = afterpay_location_configuration.first.with_indifferent_access
-        config[:maximumAmount][:amount].to_m
+        afterpay_location_configuration[:maximumAmount][:amount].to_m
       end
 
       def afterpay_location
@@ -40,7 +37,7 @@ module Workarea
       end
 
       def afterpay_location_configuration
-        afterpay_configuration(afterpay_location)
+        afterpay_configuration(afterpay_location).with_indifferent_access
       end
 
       def afterpay_settings

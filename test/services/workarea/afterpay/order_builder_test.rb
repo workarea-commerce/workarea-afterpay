@@ -19,7 +19,7 @@ module Workarea
         payment.reload
         order_hash = Workarea::Afterpay::OrderBuilder.new(order).build
 
-        assert_equal(9.00, order_hash[:totalAmount][:amount].to_f)
+        assert_equal(9.00, order_hash[:amount][:amount].to_f)
         assert_equal(1.00, order_hash[:shippingAmount][:amount].to_f)
         assert_equal(0.00, order_hash[:taxAmount][:amount].to_f)
         assert_equal(order.id, order_hash[:merchantReference])
@@ -31,8 +31,8 @@ module Workarea
         assert_equal(1, order_hash[:discounts].size)
         assert_equal("Order Total Discount", order_hash[:discounts].first[:displayName])
 
-        assert_equal("Philadelphia", order_hash[:shipping][:suburb])
-        assert_equal("Wilmington", order_hash[:billing][:suburb])
+        assert_equal("Philadelphia", order_hash[:shipping][:area1])
+        assert_equal("Wilmington", order_hash[:billing][:area1])
 
         assert_equal(1, order_hash[:items].size)
         assert_equal("SKU", order_hash[:items].first[:sku])
@@ -79,7 +79,6 @@ module Workarea
           },
           shipping_service: shipping_service.name,
         )
-
 
         order
       end

@@ -55,7 +55,7 @@ module Workarea
       ap_order_details = gateway.get_order(params[:orderToken])
       tender = payment.afterpay
 
-      unless (ap_order_details.body["totalAmount"]["amount"].to_m == tender.amount.to_m && current_checkout.complete?)
+      unless (ap_order_details.body["amount"]["amount"].to_m == tender.amount.to_m && current_checkout.complete?)
         flash[:error] = t('workarea.storefront.afterpay.payment_error')
         payment.clear_afterpay
         redirect_to(checkout_payment_path) && (return)

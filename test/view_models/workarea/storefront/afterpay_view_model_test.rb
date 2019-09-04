@@ -61,16 +61,6 @@ module Workarea
         refute(view_model.afterpay_country.present?)
       end
 
-      def test_display_options
-        @order.total_price = 25.00
-
-        checkout = Workarea::Checkout.new(@order, @user)
-        view_model = Workarea::Storefront::AfterpayViewModel.new(checkout, { afterpay_configuration: afterpay_options, order: @order })
-
-        assert_equal("PAY_BY_INSTALLMENT", view_model.display_option[:type])
-        assert_equal("Pay over time", view_model.display_option[:description])
-      end
-
       def test_installment_price
         @order.total_price = 100.00
         view_model = Workarea::Storefront::AfterpayViewModel.new(nil, { afterpay_configuration: afterpay_options, order: @order })
@@ -80,20 +70,16 @@ module Workarea
 
       private
         def afterpay_options
-          [
-            {
-              "type": "PAY_BY_INSTALLMENT",
-              "description": "Pay over time",
-              "minimumAmount": {
-                   "amount": "20.00",
-                   "currency": "USD"
-               },
-              "maximumAmount": {
-                  "amount": "30.00",
-                  "currency": "USD"
-              }
+          {
+            "minimumAmount": {
+                 "amount": "20.00",
+                 "currency": "USD"
+             },
+            "maximumAmount": {
+                "amount": "30.00",
+                "currency": "USD"
             }
-          ]
+          }
         end
     end
   end
