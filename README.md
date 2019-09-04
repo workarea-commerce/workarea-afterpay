@@ -18,10 +18,10 @@ Workarea Afterpay orders use the following flow:
 3. User clicks place order button - an api call is made to get a token.
 4. If token creation is successful the token is injected into the DOM and the user is redirected to the Afterpay site.
 5. User enters payment details and submits payment.
-6. User is taken back to Workarea and payment is captured.
+6. User is taken back to Workarea and payment is authorized or captured.
 7. Order confirmation page is displayed.
 
-A diagram of the flow can be found here: https://docs.afterpay.com/us-online-api-v1.html#direct-payment-flow
+Afterpay API documentation can be found here: https://docs.afterpay.com/online-api-v2-b857508478e7.html
 
 Implementation Notes
 --------------------------------------------------------------------------------
@@ -80,13 +80,13 @@ The regional US and Australian API endpoints require separate credentials. You c
 Getting Started
 --------------------------------------------------------------------------------
 
-This gem contains a rails engine that must be mounted onto a host Rails application.
+Add the gem to your application's Gemfile:
 
-Add the gem to your application's Gemfile specifying the source:
-
-    # ...
-    gem 'workarea-afterpay'
-    # ...
+```ruby
+# ...
+gem 'workarea-afterpay'
+# ...
+```
 
 Update your application's bundle.
 
