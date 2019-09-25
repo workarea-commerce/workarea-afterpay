@@ -38,14 +38,16 @@ This integration makes use of the ```storefront.product_pricing_details``` appen
 
 If you wish for the Afterpay pricing to appear on your custom PDP template simply add the append point manually by adding the following:
 
-```= append_partials('storefront.product_pricing_details', product: product)```
+```ruby
+= append_partials('storefront.product_pricing_details', product: product)
+```
 
 
 **Testing**
 
 The test API endpoints will be used by default. Production mode can be triggered by setting the ***test*** configuration value in an initializer to ***false***.
 
-```
+```ruby
 config.afterpay.test = false
 ```
 
@@ -86,46 +88,27 @@ The regional US and Australian API endpoints require separate credentials. You c
 Getting Started
 --------------------------------------------------------------------------------
 
-This gem contains a rails engine that must be mounted onto a host Rails application.
+Add the gem to your application's Gemfile:
 
-To access Workarea gems and source code, you must be an employee of WebLinc or a licensed retailer or partner.
-
-Workarea gems are hosted privately at https://gems.weblinc.com/.
-You must have individual or team credentials to install gems from this server. Add your gems server credentials to Bundler:
-
-    bundle config gems.weblinc.com my_username:my_password
-
-Or set the appropriate environment variable in a shell startup file:
-
-    export BUNDLE_GEMS__WEBLINC__COM='my_username:my_password'
-
-Then add the gem to your application's Gemfile specifying the source:
-
-    # ...
-    gem 'workarea-afterpay', source: 'https://gems.weblinc.com'
-    # ...
-
-Or use a source block:
-
-    # ...
-    source 'https://gems.weblinc.com' do
-      gem 'workarea-afterpay'
-    end
-    # ...
+```ruby
+# ...
+gem 'workarea-afterpay'
+# ...
+```
 
 Update your application's bundle.
 
-    cd path/to/application
-    bundle
+```bash
+cd path/to/application
+bundle
+```
 
-Workarea Platform Documentation
+Workarea Commerce Documentation
 --------------------------------------------------------------------------------
 
-See [http://developer.workarea.com](http://developer.workarea.com) for Workarea platform documentation.
+See [https://developer.workarea.com](https://developer.workarea.com) for Workarea Commerce documentation.
 
-Copyright & Licensing
+License
 --------------------------------------------------------------------------------
 
-Copyright WebLinc 2018. All rights reserved.
-
-For licensing, contact sales@workarea.com.
+Workarea Afterpay is released under the [Business Software License](LICENSE)
