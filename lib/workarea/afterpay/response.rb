@@ -10,7 +10,12 @@ module Workarea
       end
 
       def body
-        @body ||= JSON.parse(@response.body)
+        return {} unless @response.body.present? && @response.body != "null"
+        JSON.parse(@response.body)
+      end
+
+      def status
+        @response.status
       end
     end
   end

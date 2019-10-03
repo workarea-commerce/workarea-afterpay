@@ -6,9 +6,7 @@ module Workarea
         include CreditCardOperation
 
         def complete!
-          request_id = SecureRandom.uuid
-
-          response = gateway.refund(afterpay_order_id, transaction.amount, request_id)
+          response = refund
 
           if response.success?
             transaction.response = ActiveMerchant::Billing::Response.new(
@@ -33,7 +31,6 @@ module Workarea
         end
 
         private
-
           def gateway
             currency = transaction.amount.currency.iso_code
             location = Workarea::Afterpay.config[:currency_country_map][currency.to_sym]
@@ -45,6 +42,21 @@ module Workarea
 
           def afterpay_order_id
             transaction.reference.response.params["id"]
+          end
+
+          def refund
+            request_id = SecureRandom.uuid
+            refund_response = response(request_id)
+
+            if Workarea::Afterpay::RETRY_ERROR_STATUSES.include? refund_response.status
+              return response(request_id)
+            end
+
+            refund_response
+          end
+
+          def response(request_id)
+            gateway.refund(afterpay_order_id, transaction.amount, request_id)
           end
       end
     end

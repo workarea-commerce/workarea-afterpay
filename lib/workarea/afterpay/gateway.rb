@@ -13,14 +13,14 @@ module Workarea
 
       def get_configuration
         response = connection.get do |req|
-          req.url "/v1/configuration"
+          req.url "/v2/configuration"
         end
         Afterpay::Response.new(response)
       end
 
       def get_order(token)
-        response = connection.get do |req|
-          req.url "/v1/orders/#{token}"
+          response = connection.get do |req|
+          req.url "/v2/checkouts/#{token}"
         end
 
         Afterpay::Response.new(response)
@@ -28,19 +28,56 @@ module Workarea
 
       def create_order(order)
         response = connection.post do |req|
-          req.url "/v1/orders"
+          req.url "/v2/checkouts"
           req.body = order.to_json
+        end
+        Afterpay::Response.new(response)
+      end
+
+      def authorize(token, order_id, request_id)
+        body = {
+          token: token,
+          request_id: request_id
+        }
+        response = connection.post do |req|
+          req.url "/v2/payments/auth"
+          req.body = body.to_json
         end
 
         Afterpay::Response.new(response)
       end
 
-      def capture(token, order_id)
+      def capture(payment_id, amount, request_id)
         body = {
-          token: token
+          amount: {
+            amount: amount.to_f,
+            currency: amount.currency.iso_code
+          },
+          request_id: request_id
         }
         response = connection.post do |req|
-          req.url "/v1/payments/capture"
+          req.url "/v2/payments/#{payment_id}/capture"
+          req.body = body.to_json
+        end
+
+        Afterpay::Response.new(response)
+      end
+
+      def void(payment_id)
+        response = connection.post do |req|
+          req.url "/v2/payments/#{payment_id}/void"
+        end
+
+        Afterpay::Response.new(response)
+      end
+
+      def purchase(token, request_id)
+        body = {
+          token: token,
+          request_id: request_id
+        }
+        response = connection.post do |req|
+          req.url "/v2/payments/capture"
           req.body = body.to_json
         end
 
@@ -57,7 +94,7 @@ module Workarea
         }
 
         response = connection.post do |req|
-          req.url "/v1/payments/#{afterpay_order_id}/refund"
+          req.url "/v2/payments/#{afterpay_order_id}/refund"
           req.body = body.to_json
         end
         Afterpay::Response.new(response)

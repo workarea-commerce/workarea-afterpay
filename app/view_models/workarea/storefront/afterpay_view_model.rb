@@ -5,7 +5,7 @@ module Workarea
     # Orders must be between the min and max order total to qualify.
     def order_total_in_range?
       return unless afterpay_configuration.present?
-      eligible_options.present?
+      order.order_balance >= min_price && order.order_balance <= max_price
     end
 
     # Show if admin settings are enabled, there are configuration options returned
@@ -25,26 +25,18 @@ module Workarea
       show? && afterpay_settings.display_on_pdp?
     end
 
-    # TODO - handle what to display if there are multiple
-    # eligible display options. Docs do not seem to
-    # indicate there would ever be more than one.
-    def display_option
-      eligible_options.first
-    end
 
     def installment_price
       order.order_balance / Workarea.config.afterpay[:installment_count]
     end
 
     def min_price
-      config = afterpay_configuration.first
-      return 0.to_m unless config[:minimumAmount].present?
-      config[:minimumAmount][:amount].to_m
+      return 0.to_m unless afterpay_configuration[:minimumAmount].present?
+      afterpay_configuration[:minimumAmount][:amount].to_m
     end
 
     def max_price
-      config = afterpay_configuration.first
-      config[:maximumAmount][:amount].to_m
+      afterpay_configuration[:maximumAmount][:amount].to_m
     end
 
     def afterpay_country
@@ -52,12 +44,6 @@ module Workarea
     end
 
     private
-      def eligible_options
-        ap_options = afterpay_configuration.select do |ap|
-          order.order_balance >= min_price && order.order_balance <= max_price
-        end
-      end
-
       def afterpay_configuration
         options[:afterpay_configuration]
       end

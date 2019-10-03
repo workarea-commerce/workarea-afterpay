@@ -3,15 +3,22 @@ require 'test_helper'
 module Workarea
   class AfterpayPaymentIntegrationTest < Workarea::TestCase
 
-    def test_capture
-      tender.amount = 5.to_m
-      transaction = tender.build_transaction(action: 'capture')
+    def test_auth_capture
+      transaction = tender.build_transaction(action: 'authorize')
+      Payment::Purchase::Afterpay.new(tender, transaction).complete!
+
+      assert(transaction.success?)
       transaction.save!
 
-      operation = Payment::Capture::Afterpay.new(tender, transaction)
-      operation.complete!
+      assert(tender.token.present?)
 
-      assert(transaction.success?, 'expected transaction to be successful')
+      capture = Payment::Capture.new(payment: payment)
+      capture.allocate_amounts!(total: 5.to_m)
+      assert(capture.valid?)
+      capture.complete!
+
+      capture_transaction = payment.transactions.detect(&:captures)
+      assert(capture_transaction.valid?)
     end
 
     def test_auth
@@ -26,11 +33,32 @@ module Workarea
       assert(transaction.success?)
     end
 
-    private
+    def test_auth_void
+      transaction = tender.build_transaction(action: 'authorize')
+      operation = Payment::Authorize::Afterpay.new(tender, transaction)
+      operation.complete!
+      assert(transaction.success?, 'expected transaction to be successful')
+      transaction.save!
 
-      def gateway
-        Workarea.Afterpay.gateay
-      end
+      assert(tender.token.present?)
+      operation.cancel!
+      void = transaction.cancellation
+
+      assert(void.success?)
+    end
+
+    def test_timeout_auth
+      transaction = timeout_tender.build_transaction(action: 'authorize')
+      operation = Payment::Authorize::Afterpay.new(timeout_tender, transaction)
+      operation.complete!
+      refute(transaction.success?, 'expected transaction to be a failure')
+      transaction.save!
+
+      assert(tender.token.present?)
+    end
+
+
+    private
 
       def payment
         @payment ||=
@@ -58,6 +86,19 @@ module Workarea
 
             payment.build_afterpay(
               token: '12345'
+            )
+
+            payment.afterpay
+          end
+      end
+
+      def timeout_tender
+        @tender ||=
+          begin
+            payment.set_address(first_name: 'Ben', last_name: 'Crouse')
+
+            payment.build_afterpay(
+              token: 'timeout_token'
             )
 
             payment.afterpay

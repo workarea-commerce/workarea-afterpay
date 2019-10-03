@@ -135,7 +135,7 @@ module Workarea
         transactions = payment.tenders.first.transactions
         assert_equal(1, transactions.size)
         assert(transactions.first.success?)
-        assert_equal('purchase', transactions.first.action)
+        assert_equal('authorize', transactions.first.action)
       end
 
 
@@ -183,7 +183,7 @@ module Workarea
 
         ap_tender = payment.tenders.detect { |t| t.slug == :afterpay }
         assert(ap_tender.transactions.first.success?)
-        assert_equal('purchase', ap_tender.transactions.first.action)
+        assert_equal('authorize', ap_tender.transactions.first.action)
 
         sc_tender = payment.tenders.detect { |t| t.slug == :store_credit }
         assert(sc_tender.transactions.first.success?)
@@ -221,21 +221,21 @@ module Workarea
 
       def get_order_response(amount)
         b = {
-              "totalAmount": {
+              "amount": {
                 "amount": "#{amount}",
                 "currency": "USD"
+              }
             }
-          }
           Workarea::Afterpay::Response.new(response(b))
       end
 
       def response(body, status = 200)
         response = Faraday.new do |builder|
           builder.adapter :test do |stub|
-            stub.get("/v1/bogus") { |env| [ status, {}, body.to_json ] }
+            stub.get("/v2/bogus") { |env| [ status, {}, body.to_json ] }
           end
         end
-        response.get("/v1/bogus")
+        response.get("/v2/bogus")
       end
     end
   end
