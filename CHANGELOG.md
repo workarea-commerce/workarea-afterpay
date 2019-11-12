@@ -1,3 +1,26 @@
+Workarea Afterpay 2.1.0 (2019-11-12)
+--------------------------------------------------------------------------------
+
+*   Update Afterpay API version to V2
+
+    New API version allows for a traditional auth then capture
+    model of handling payments. Updates also include idempotent
+    payment operations
+    Jeff Yucis
+
+*   Update Afterpay API version to V2
+
+    New API version allows for a traditional auth then capture
+    model of handling payments. Updates also include idempotent
+    payment operations
+    Jeff Yucis
+
+*   Update README
+
+    Matt Duffy
+
+
+
 Workarea Afterpay 2.0.2 (2019-08-21)
 --------------------------------------------------------------------------------
 
