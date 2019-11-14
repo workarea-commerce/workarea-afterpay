@@ -1,7 +1,6 @@
 module Workarea
   module Afterpay
     class BogusGateway
-
       def initialize(*)
       end
 

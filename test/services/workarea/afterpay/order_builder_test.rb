@@ -3,7 +3,6 @@ require 'test_helper'
 module Workarea
   module Afterpay
     class OrderBuilderTest < Workarea::TestCase
-
       def test_build
         create_order_total_discount
         order = create_order

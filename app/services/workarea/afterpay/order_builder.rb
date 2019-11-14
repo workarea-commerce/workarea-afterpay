@@ -1,7 +1,6 @@
 module Workarea
   module Afterpay
     class OrderBuilder
-
       module ProductUrl
         include Workarea::I18n::DefaultUrlOptions
         include Storefront::Engine.routes.url_helpers

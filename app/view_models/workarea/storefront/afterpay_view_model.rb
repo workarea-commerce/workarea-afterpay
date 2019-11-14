@@ -1,7 +1,6 @@
 module Workarea
   module Storefront
     class AfterpayViewModel < ApplicationViewModel
-
     # Orders must be between the min and max order total to qualify.
     def order_total_in_range?
       return unless afterpay_configuration.present?

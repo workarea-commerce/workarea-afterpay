@@ -2,7 +2,6 @@ require 'test_helper'
 
 module Workarea
   class AfterpayPaymentIntegrationTest < Workarea::TestCase
-
     def test_auth_capture
       transaction = tender.build_transaction(action: 'authorize')
       Payment::Purchase::Afterpay.new(tender, transaction).complete!
