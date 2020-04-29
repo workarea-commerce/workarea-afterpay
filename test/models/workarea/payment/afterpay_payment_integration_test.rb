@@ -20,6 +20,29 @@ module Workarea
       assert(capture_transaction.valid?)
     end
 
+    def test_capture_decline
+      transaction = tender.build_transaction(action: 'authorize')
+      Payment::Authorize::Afterpay.new(tender, transaction).complete!
+
+      # To force a decline response from capture API
+      transaction.update!(
+        response: ActiveMerchant::Billing::Response.new(
+          true,
+          'test',
+          transaction.response.params.merge('id' => 'declined')
+        )
+      )
+
+      capture = Payment::Capture.new(payment: payment)
+      capture.allocate_amounts!(total: 5.to_m)
+      assert(capture.valid?)
+      refute(capture.complete!)
+
+      capture_transaction = payment.reload.transactions.detect(&:capture?)
+      refute(capture_transaction.success?)
+      assert_equal('DECLINED', capture_transaction.response.params['status'])
+    end
+
     def test_auth
       transaction = tender.build_transaction(action: 'authorize')
       Payment::Authorize::Afterpay.new(tender, transaction).complete!
@@ -30,6 +53,15 @@ module Workarea
       transaction = tender.build_transaction(action: 'purchase')
       Payment::Purchase::Afterpay.new(tender, transaction).complete!
       assert(transaction.success?)
+    end
+
+    def test_purchase_decline
+      tender.token = 'declined'
+      transaction = tender.build_transaction(action: 'purchase')
+      Payment::Purchase::Afterpay.new(tender, transaction).complete!
+
+      refute(transaction.success?)
+      assert_equal('DECLINED', transaction.response.params['status'])
     end
 
     def test_auth_void
@@ -84,7 +116,8 @@ module Workarea
             payment.set_address(first_name: 'Ben', last_name: 'Crouse')
 
             payment.build_afterpay(
-              token: '12345'
+              token: '12345',
+              amount: 5.to_m
             )
 
             payment.afterpay
