@@ -104,6 +104,8 @@ module Workarea
           Response.new(response(capture_error_response_body, 402))
         elsif token == "timeout_token"
           Response.new(response(nil, 502))
+        elsif token == 'declined'
+          Response.new(response(payment_response_body(status: 'DECLINED'), 200))
         else
           Response.new(response(payment_response_body, 200))
         end

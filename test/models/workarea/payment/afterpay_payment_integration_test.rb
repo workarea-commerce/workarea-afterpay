@@ -49,6 +49,15 @@ module Workarea
       assert(transaction.success?, 'expected transaction to be successful')
     end
 
+    def test_auth_decline
+      tender.token = 'declined'
+      transaction = tender.build_transaction(action: 'authorize')
+      Payment::Authorize::Afterpay.new(tender, transaction).complete!
+
+      refute(transaction.success?)
+      assert_equal('DECLINED', transaction.response.params['status'])
+    end
+
     def test_purchase
       transaction = tender.build_transaction(action: 'purchase')
       Payment::Purchase::Afterpay.new(tender, transaction).complete!
