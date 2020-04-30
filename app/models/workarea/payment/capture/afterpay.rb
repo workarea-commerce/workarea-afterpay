@@ -8,7 +8,7 @@ module Workarea
 
         def complete!
           response = capture
-          if response.success?
+          if response.success? && response.body['status'] == 'APPROVED'
             transaction.response = ActiveMerchant::Billing::Response.new(
               true,
               I18n.t(

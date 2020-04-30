@@ -92,7 +92,11 @@ module Workarea
       end
 
       def capture(payment_id, amount, request_id)
-        Response.new(response(payment_response_body, 200))
+        if payment_id == 'declined'
+          Response.new(response(payment_response_body(status: 'DECLINED'), 200))
+        else
+          Response.new(response(payment_response_body, 200))
+        end
       end
 
       def authorize(token, order_id = "", request_id)
@@ -100,6 +104,8 @@ module Workarea
           Response.new(response(capture_error_response_body, 402))
         elsif token == "timeout_token"
           Response.new(response(nil, 502))
+        elsif token == 'declined'
+          Response.new(response(payment_response_body(status: 'DECLINED'), 200))
         else
           Response.new(response(payment_response_body, 200))
         end
@@ -108,6 +114,8 @@ module Workarea
       def purchase(token, order_id = "", request_id)
         if token == "error_token"
           Response.new(response(capture_error_response_body, 402))
+        elsif token == 'declined'
+          Response.new(response(payment_response_body(status: 'DECLINED'), 200))
         else
           Response.new(response(payment_response_body, 200))
         end
@@ -152,11 +160,11 @@ module Workarea
           }
         end
 
-        def payment_response_body
+        def payment_response_body(status: 'APPROVED')
           {
             "id": "12345678",
              "token": "q54l9qd907m6iqqqlcrm5tpbjjsnfo47vsm59gqrfnd2rqefk9hu",
-             "status": "APPROVED",
+             "status": status,
              "created": "2015-07-14T10:08:14.123Z",
              "totalAmount": {
                 "amount": "21.85",
