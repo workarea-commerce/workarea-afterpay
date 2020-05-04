@@ -1,3 +1,24 @@
+Workarea Afterpay 2.1.1 (2020-05-04)
+--------------------------------------------------------------------------------
+
+*   Respect payment declined in authorize transactions
+
+
+    Ben Crouse
+
+*   Respect decline payment responses in capture and purchase operations
+
+    Fixes #3
+
+    Ben Crouse
+
+*   Add CI and rubocop linting
+
+
+    Jeff Yucis
+
+
+
 Workarea Afterpay 2.1.0 (2019-11-12)
 --------------------------------------------------------------------------------
 
