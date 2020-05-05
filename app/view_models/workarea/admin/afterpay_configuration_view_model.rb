@@ -5,7 +5,7 @@ module Workarea
 
       def au_limits
         return unless Workarea::Afterpay.merchant_id(:au).present?
-        limits = afterpay_configuration(:au).first
+        limits = afterpay_configuration(:au)
         {
           min: min_price(limits),
           max: max_price(limits)
@@ -14,7 +14,7 @@ module Workarea
 
       def us_limits
         return unless Workarea::Afterpay.merchant_id(:us).present?
-        limits = afterpay_configuration(:us).first
+        limits = afterpay_configuration(:us)
         {
           min: min_price(limits),
           max: max_price(limits)
@@ -24,11 +24,12 @@ module Workarea
       private
 
         def min_price(limits)
-          return 0.to_m unless limits["minimumAmount"].present?
+          return 0.to_m unless limits.present? && limits["minimumAmount"].present?
           limits["minimumAmount"]["amount"].to_m
         end
 
         def max_price(limits)
+          return unless limits.present?
           limits["maximumAmount"]["amount"].to_m
         end
     end
