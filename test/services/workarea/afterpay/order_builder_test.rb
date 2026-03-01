@@ -9,7 +9,7 @@ module Workarea
 
         # apply store credit
         payment = Workarea::Payment.find(order.id)
-        payment.profile.update_attributes!(store_credit: 1.00)
+        payment.profile.update!(store_credit: 1.00)
         payment.set_store_credit
         payment.tenders.first.amount = 1.to_m
         payment.save

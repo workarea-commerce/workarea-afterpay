@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'workarea', '~> 3.x'
 
   s.add_dependency "faraday", "~> 0.10"
+s.required_ruby_version = ['>= 2.7', '< 3.5']
 end

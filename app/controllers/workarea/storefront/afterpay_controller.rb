@@ -29,7 +29,7 @@ module Workarea
 
       # set the token on the order so we can more easily look up the order
       # when returning from afterpay
-      current_order.update_attributes!(afterpay_token: token)
+      current_order.update!(afterpay_token: token)
 
       redirect_to checkout_payment_path
     end
@@ -61,7 +61,7 @@ module Workarea
         redirect_to(checkout_payment_path) && (return)
       end
 
-      payment.afterpay.update_attributes!(ready_to_capture: true)
+      payment.afterpay.update!(ready_to_capture: true)
 
       # place the order.
       if current_checkout.place_order

@@ -160,7 +160,7 @@ module Workarea
         payment = Payment.find(order.id)
         payment.profile = create_payment_profile(email: order.email)
 
-        payment.profile.update_attributes!(store_credit: 1.00)
+        payment.profile.update!(store_credit: 1.00)
         payment.set_store_credit
         payment.tenders.first.amount = 1.to_m
         payment.save!

@@ -9,7 +9,7 @@ module Workarea
         end
 
         def update
-          if configuration.update_attributes(configuration_params)
+          if configuration.update(configuration_params)
             redirect_to admin.edit_afterpay_configuration_path, flash: { success: t('workarea.admin.afterpay_configuration.edit.flash_messages.updated') }
           else
             flash[:error] = t('workarea.admin.afterpay_configuration.edit.flash_messages.save_error')
